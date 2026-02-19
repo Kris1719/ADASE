@@ -395,19 +395,19 @@
           frame-level voice conversion fail to exploit the linguistic structure underlying speech and are constrained by
           scarce pathological data. We propose a novel multi-stage framework integrating (i)~discrete representation
           learning and (ii)~attention-driven feature alignment. In the first stage, WavLM embeddings are quantized into
-          discrete tokens via $k$-means clustering and refined by a bidirectional Speech Language Model that maps
+          discrete tokens via k-means clustering and refined by a bidirectional Speech Language Model that maps
           pathological token patterns toward normal speech, followed by Conformer-based reconstruction of continuous
           features. In the second stage, an Attention-Driven Feature Matcher (ADFM) further enhances the reconstructed
           features through three tightly coupled modules: a residual Feature Enhancer with learnable scaling, a
-          Multi-Head Attention Matcher that performs soft alignment over $k$-nearest normal-speech neighbors, and a
+          Multi-Head Attention Matcher that performs soft alignment over k-nearest normal-speech neighbors, and a
           Quality Predictor that estimates match confidence to adaptively weight each feature. A HiFi-GAN vocoder
           synthesizes the final waveform. To overcome data scarcity, we further introduce a Multi-Mask GAN augmentation
           strategy extending MaskCycleGAN-VC with a timbre similarity loss for speaker identity preservation.
           Evaluations on Thai and English corpora show that our system achieves the best speaker similarity in both
           languages (0.858 Thai, 0.850 English) while simultaneously achieving competitive or state-of-the-art FAD
-          (5.252 Thai, 5.385 English) and MCD (5.644 Thai, 5.322 English), with up to 27.3\% FAD reduction over kNN-VC.
-          Subjective tests confirm significant listener preference for the enhanced speech (77\% English, 67\% Thai; $p
-          <0.001$). </p>
+          (5.252 Thai, 5.385 English) and MCD (5.644 Thai, 5.322 English), with up to 27.3% FAD reduction over kNN-VC.
+          Subjective tests confirm significant listener preference for the enhanced speech (77% English, 67% Thai; p
+          <0.001). </p>
       </div>
     </div>
   </div>
@@ -434,7 +434,7 @@
           <li><a
               href="http://www.kecl.ntt.co.jp/people/kaneko.takuhiro/projects/maskcyclegan-vc/index.html#F2M">Wesper</a>
             - Voice Conversion with Masked CycleGAN</li>
-          <li><a href="http://www.kecl.ntt.co.jp/people/kaneko.takuhiro/projects/cyclegan-vc/index.html">SELM</a> -
+          <li><a href="http://www.kecl.ntt.co.jp/people/kaneko.takuhiro/projects/cyclegan-vc/index.html">kNN-VC</a> -
             Voice Conversion using CycleGAN</li>
           <li><a href="http://www.kecl.ntt.co.jp/people/kaneko.takuhiro/projects/cyclegan-vc2/index.html">Phoneme
               Hallucinator</a> - Improved CycleGAN-based Voice Conversion</li>
@@ -464,7 +464,7 @@
         <div class="photoContainer">
           <div class="photo">
             <img src="overall_pipeline.drawio.png" alt="Photo 1" class="img-fluid">
-            <div class="caption caption_spec">Spectrogram Comparison</div>
+            <div class="caption caption_spec">Overall Pipeline of propose method</div>
           </div>
         </div>
       </div>
@@ -477,10 +477,10 @@
 
 
   <div class="container mt-5">
-
+    <!-- SENTENCE 1 -->
     <div class="card">
       <div class="card-header">
-        <h2>Thai Alaryngeal Speech Enhancement Results</h2>
+        <h2> English Alaryngeal Speech Enhancement Results</h2>
       </div>
       <div class="card-body">
         <div id="ctm">
@@ -490,7 +490,8 @@
           <div class="audioPlayer">
             <p>Alaryngeal</p>
             <audio controls>
-              <source src="wavs/0001_0001.wav" type="audio/wav">
+              <source src="wavs/ADASE/alar_eng/common_voice_en_39586336-converted_normal_to_alaryngeal.wav"
+                type="audio/wav">
               Your browser does not support the audio element.
             </audio>
           </div>
@@ -498,29 +499,32 @@
           <div class="audioPlayer">
             <p>Normal</p>
             <audio controls>
-              <source src="wavs/normal_1.wav" type="audio/wav">
+              <source src="wavs/ADASE/nor_eng/common_voice_en_39586336.mp3" type="audio/wav">
               Your browser does not support the audio element.
             </audio>
           </div>
 
 
           <div class="audioPlayer">
-            <p>Enhanced Alaryngeal with WESPER</p>
+            <p>Enhanced Alaryngeal with kNN-VC</p>
             <audio controls>
-              <source src="wavs/0001_0001_wesper (1).wav" type="audio/wav">
+              <source src="wavs/kNNVC/en_eng/matched_segment_004_002.wav" type="audio/wav">
               Your browser does not support the audio element.
             </audio>
           </div>
 
           <div class="audioPlayer">
-            <p>Enhanced Alaryngeal with our proposed model</p>
+            <p>Enhanced Alaryngeal with ADASE</p>
             <audio controls>
-              <source src="wavs/0001_0001_final.WAV" type="audio/wav">
+              <source
+                src="wavs/ADASE/en_eng/selm_enhanced_tokens_common_voice_en_39586336-converted_normal_to_alaryngeal_enhanced.wav"
+                type="audio/wav">
               Your browser does not support the audio element.
             </audio>
           </div>
         </div>
       </div>
+      <!-- SENTENCE 2 -->
 
     </div>
     <div class="card">
@@ -533,7 +537,8 @@
           <div class="audioPlayer">
             <p>Alaryngeal</p>
             <audio controls>
-              <source src="wavs/0001_0003.wav" type="audio/wav">
+              <source src="wavs/ADASE/alar_eng/common_voice_en_39586337-converted_normal_to_alaryngeal.wav"
+                type="audio/wav">
               Your browser does not support the audio element.
             </audio>
           </div>
@@ -541,13 +546,13 @@
           <div class="audioPlayer">
             <p>Normal</p>
             <audio controls>
-              <source src="wavs/normal_3.wav" type="audio/wav">
+              <source src="wavs/ADASE/nor_eng/common_voice_en_39586337.mp3" type="audio/wav">
               Your browser does not support the audio element.
             </audio>
           </div>
 
           <div class="audioPlayer">
-            <p>Enhanced Alaryngeal with WESPER</p>
+            <p>Enhanced Alaryngeal with kNN-VC</p>
             <audio controls>
               <source src="wavs/0001_0003_Wesper.wav" type="audio/wav">
               Your browser does not support the audio element.
@@ -555,9 +560,11 @@
           </div>
 
           <div class="audioPlayer">
-            <p>Enhanced Alaryngeal with our proposed model</p>
+            <p>Enhanced Alaryngeal with ADASE</p>
             <audio controls>
-              <source src="wavs/final_output_0001_0003_trimmed.WAV" type="audio/wav">
+              <source
+                src="wavs/ADASE/en_eng/selm_enhanced_tokens_common_voice_en_39586337-converted_normal_to_alaryngeal_enhanced.wav"
+                type="audio/wav">
               Your browser does not support the audio element.
             </audio>
           </div>
@@ -567,7 +574,7 @@
 
 
 
-
+    <!-- SENTENCE 3 -->
     <div class="card">
 
       <div class="card-body">
@@ -578,7 +585,8 @@
           <div class="audioPlayer">
             <p>Alaryngeal</p>
             <audio controls>
-              <source src="wavs/0001_0004.wav" type="audio/wav">
+              <source src="wavs/ADASE/alar_eng/common_voice_en_39586338-converted_normal_to_alaryngeal.wav"
+                type="audio/wav">
               Your browser does not support the audio element.
             </audio>
           </div>
@@ -586,13 +594,13 @@
           <div class="audioPlayer">
             <p>Normal</p>
             <audio controls>
-              <source src="wavs/normal_4.wav" type="audio/wav">
+              <source src="wavs/ADASE/nor_eng/common_voice_en_39586338.mp3" type="audio/wav">
               Your browser does not support the audio element.
             </audio>
           </div>
 
           <div class="audioPlayer">
-            <p>Enhanced Alaryngeal with WESPER</p>
+            <p>Enhanced Alaryngeal with kNN-VC</p>
             <audio controls>
               <source src="wavs/0001_0004_Wesper.wav" type="audio/wav">
               Your browser does not support the audio element.
@@ -600,9 +608,11 @@
           </div>
 
           <div class="audioPlayer">
-            <p>Enhanced Alaryngeal with our proposed model</p>
+            <p>Enhanced Alaryngeal with ADASE</p>
             <audio controls>
-              <source src="wavs/final_output_0001_0004_trimmed.WAV" type="audio/wav">
+              <source
+                src="wavs/ADASE/en_eng/selm_enhanced_tokens_common_voice_en_39586338-converted_normal_to_alaryngeal_enhanced.wav"
+                type="audio/wav">
               Your browser does not support the audio element.
             </audio>
           </div>
@@ -610,6 +620,89 @@
       </div>
 
     </div>
+    <!-- SENTENCE 4 -->
+    <div class="card">
+      <div class="card-body">
+        <div id="ctm">
+          <h2>Sentence 4</h2>
+        </div>
+        <div class="audioContainer">
+          <div class="audioPlayer">
+            <p>Alaryngeal</p>
+            <audio controls>
+              <source src="wavs/ADASE/alar_eng/segment_004_002.wav" type="audio/wav">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+
+          <div class="audioPlayer">
+            <p>Normal</p>
+            <audio controls>
+              <source src="wavs/ADASE/nor_eng/0004_0002.wav" type="audio/wav">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+
+          <div class="audioPlayer">
+            <p>Enhanced Alaryngeal with kNN-VC</p>
+            <audio controls>
+              <source src="wavs/ADASE/en_eng/matched_segment_004_002.wav" type="audio/wav">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+
+          <div class="audioPlayer">
+            <p>Enhanced Alaryngeal with ADASE</p>
+            <audio controls>
+              <source src="wavs/ADASE/en_eng/matched_segment_004_002.wav" type="audio/wav">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- SENTENCE 5 -->
+    <div class="card">
+      <div class="card-body">
+        <div id="ctm">
+          <h2>Sentence 5</h2>
+        </div>
+        <div class="audioContainer">
+          <div class="audioPlayer">
+            <p>Alaryngeal</p>
+            <audio controls>
+              <source src="wavs/ADASE/alar_eng/segment_005_002.wav" type="audio/wav">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+
+          <div class="audioPlayer">
+            <p>Normal</p>
+            <audio controls>
+              <source src="wavs/ADASE/nor_eng/0005_0002.wav" type="audio/wav">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+
+          <div class="audioPlayer">
+            <p>Enhanced Alaryngeal with kNN-VC</p>
+            <audio controls>
+              <source src="" type="audio/wav">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+
+          <div class="audioPlayer">
+            <p>Enhanced Alaryngeal with ADASE</p>
+            <audio controls>
+              <source src="wavs/ADASE/en_eng/matched_segment_005_002.wav" type="audio/wav">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- <div class="card">
             
             <div class="card-body">
@@ -643,7 +736,7 @@
                     </div>
 
                     <div class="audioPlayer">
-                        <p>Enhanced Alaryngeal with our proposed model</p>
+                        <p>Enhanced Alaryngeal with ADASE</p>
                         <audio controls>
                             <source src="/Users/krislwin/Documents/alar_enhancement_journal_webpage/wavs/0001_0001_final.WAV" type="audio/wav">
                             Your browser does not support the audio element.
@@ -658,7 +751,7 @@
   <div class="container mt-5">
     <div class="card">
       <div class="card-header">
-        <h2>English Alaryngeal Speech Enhancement Results</h2>
+        <h2>Thai Alaryngeal Speech Enhancement Results</h2>
       </div>
       <div class="card-body">
         <div id="ctm">
@@ -668,7 +761,7 @@
           <div class="audioPlayer">
             <p>Alaryngeal</p>
             <audio controls>
-              <source src="wavs/alaryngeal_eng_0.wav" type="audio/wav">
+              <source src="wavs/ADASE/alar_thai/alarcommon_voice_th_23650548.wav" type="audio/wav">
               Your browser does not support the audio element.
             </audio>
           </div>
@@ -676,13 +769,13 @@
           <div class="audioPlayer">
             <p>Normal</p>
             <audio controls>
-              <source src="wavs/English_normal.wav" type="audio/wav">
+              <source src="wavs/ADASE/nor_thai/common_voice_th_23650548.wav" type="audio/wav">
               Your browser does not support the audio element.
             </audio>
           </div>
 
           <div class="audioPlayer">
-            <p>Enhanced Alaryngeal with WESPER</p>
+            <p>Enhanced Alaryngeal with kNN-VC</p>
             <audio controls>
               <source src="wavs/alar_eng_0_wesper.WAV" type="audio/wav">
               Your browser does not support the audio element.
@@ -690,9 +783,10 @@
           </div>
 
           <div class="audioPlayer">
-            <p>Enhanced Alaryngeal with our proposed model</p>
+            <p>Enhanced Alaryngeal with ADASE</p>
             <audio controls>
-              <source src="wavs/final_output_jimmy_eng_0_f_trimmed.WAV" type="audio/wav">
+              <source src="wavs/ADASE/en_thai/selm_enhanced_tokens_alarcommon_voice_th_23650548_enhanced.wav"
+                type="audio/wav">
               Your browser does not support the audio element.
             </audio>
           </div>
@@ -725,7 +819,7 @@
 
 
           <div class="audioPlayer">
-            <p>Enhanced Alaryngeal with WESPER</p>
+            <p>Enhanced Alaryngeal with kNN-VC</p>
             <audio controls>
               <source src="wavs/016_002_wesper.wav" type="audio/wav">
               Your browser does not support the audio element.
@@ -733,7 +827,7 @@
           </div>
 
           <div class="audioPlayer">
-            <p>Enhanced Alaryngeal with our proposed model</p>
+            <p>Enhanced Alaryngeal with ADASE</p>
             <audio controls>
               <source src="wavs/final_output_016_002-2.wav" type="audio/wav">
               Your browser does not support the audio element.
@@ -767,7 +861,7 @@
           </div>
 
           <div class="audioPlayer">
-            <p>Enhanced Alaryngeal with WESPER</p>
+            <p>Enhanced Alaryngeal with kNN-VC</p>
             <audio controls>
               <source src="wavs/018_002_wesper.wav" type="audio/wav">
               Your browser does not support the audio element.
@@ -775,7 +869,7 @@
           </div>
 
           <div class="audioPlayer">
-            <p>Enhanced Alaryngeal with our proposed model</p>
+            <p>Enhanced Alaryngeal with ADASE</p>
             <audio controls>
               <source src="wavs/018_002_trimmed.WAV" type="audio/wav">
               Your browser does not support the audio element.
@@ -784,6 +878,89 @@
         </div>
       </div>
     </div>
+
+    <div class="card">
+      <div class="card-body">
+        <div id="ctm">
+          <h2>Sentence 4</h2>
+        </div>
+        <div class="audioContainer">
+          <div class="audioPlayer">
+            <p>Alaryngeal</p>
+            <audio controls>
+              <source src="" type="audio/wav">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+
+          <div class="audioPlayer">
+            <p>Normal</p>
+            <audio controls>
+              <source src="" type="audio/wav">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+
+          <div class="audioPlayer">
+            <p>Enhanced Alaryngeal with kNN-VC</p>
+            <audio controls>
+              <source src="" type="audio/wav">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+
+          <div class="audioPlayer">
+            <p>Enhanced Alaryngeal with ADASE</p>
+            <audio controls>
+              <source src="" type="audio/wav">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <div id="ctm">
+          <h2>Sentence 5</h2>
+        </div>
+        <div class="audioContainer">
+          <div class="audioPlayer">
+            <p>Alaryngeal</p>
+            <audio controls>
+              <source src="" type="audio/wav">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+
+          <div class="audioPlayer">
+            <p>Normal</p>
+            <audio controls>
+              <source src="" type="audio/wav">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+
+          <div class="audioPlayer">
+            <p>Enhanced Alaryngeal with kNN-VC</p>
+            <audio controls>
+              <source src="" type="audio/wav">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+
+          <div class="audioPlayer">
+            <p>Enhanced Alaryngeal with ADASE</p>
+            <audio controls>
+              <source src="" type="audio/wav">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+        </div>
+      </div>
+    </div>
+
 
   </div>
 
