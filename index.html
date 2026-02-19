@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <title>Converted Alaryngeal Speech using Voice Conversion</title>
+  <style>
+    :root {
+      --primary: #2D3436;
+      --secondary: #636E72;
+      --accent: #00B894;
+      --background: #F5F6FA;
+      --card-bg: #FFFFFF;
+      --text: #2D3436;
+      --text-light: #B2BEC3;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background-color: var(--background);
+      color: var(--text);
+    }
+
+    #header {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      color: white;
+      text-align: center;
+      padding: 120px 20px;
+      margin-bottom: 50px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #header::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, rgba(0, 184, 148, 0.1) 0%, rgba(0, 184, 148, 0) 100%);
+    }
+
+    #header h1 {
+      font-weight: 700;
+      font-size: 2.5rem;
+      max-width: 900px;
+      margin: 0 auto;
+      line-height: 1.4;
+      position: relative;
+      z-index: 1;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: none;
+      border-radius: 15px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      margin-bottom: 30px;
+      transition: all 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      color: white;
+      border-radius: 15px 15px 0 0 !important;
+      padding: 20px;
+      border-bottom: none;
+    }
+
+    .card-title {
+      color: var(--primary);
+      font-weight: 700;
+      margin-bottom: 20px;
+      position: relative;
+      padding-left: 15px;
+    }
+
+    .card-title::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 4px;
+      height: 20px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+
+    .audioContainer {
+      display: flex;
+      justify-content: space-between;
+      padding: 20px;
+      margin-top: 5px;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .audioPlayer {
+      flex: 1 1 calc(25% - 15px);
+      /* 25% width for 4 players minus gap */
+      min-width: 220px;
+      /* Ensure minimum width for readability */
+      background: var(--background, #F5F6FA);
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    /* Adjust for smaller screens */
+    @media (max-width: 992px) {
+      .audioPlayer {
+        flex: 1 1 calc(50% - 15px);
+        /* 50% width for tablet screens */
+      }
+    }
+
+    @media (max-width: 576px) {
+      .audioPlayer {
+        flex: 1 1 100%;
+        /* Full width for mobile screens */
+      }
+    }
+
+    /* .audioContainer {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            margin-top: 5px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+    
+        .audioPlayer {
+            flex: 1;
+            min-width: 250px;
+            background: var(--background);
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid rgba(0,0,0,0.05);
+        } */
+
+    .audioPlayer p {
+      font-weight: 800;
+      margin-bottom: 15px;
+      color: var(--primary);
+      font-size: 0.6rem;
+    }
+
+    audio {
+      width: 100%;
+      margin-top: 10px;
+      border-radius: 8px;
+    }
+
+    .photo {
+      position: relative;
+      width: 100%;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .photo img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .photo:hover img {
+      transform: scale(1.02);
+    }
+
+    .caption {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 1.2rem;
+      color: var(--primary);
+      font-weight: 500;
+    }
+
+    .list-group-item {
+      border: none;
+      padding: 20px;
+      margin-bottom: 10px;
+      background: var(--background);
+      border-radius: 12px !important;
+      transition: all 0.3s ease;
+    }
+
+    .list-group-item:hover {
+      background: var(--card-bg);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .footer {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      color: white;
+      padding: 40px;
+      border-radius: 15px;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .footer p {
+      margin: 0;
+      padding: 5px;
+      opacity: 0.9;
+    }
+
+    /* Add modern accent elements */
+    .accent-line {
+      width: 50px;
+      height: 4px;
+      background: var(--accent);
+      margin: 20px auto;
+      border-radius: 2px;
+    }
+
+    /* Button styling if needed */
+    .btn-primary {
+      background: var(--accent);
+      border: none;
+      padding: 12px 25px;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent);
+      opacity: 0.9;
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 768px) {
+      #header {
+        padding: 80px 20px;
+      }
+
+      #header h1 {
+        font-size: 2rem;
+      }
+
+      .audioPlayer {
+        width: 100%;
+      }
+    }
+  </style>
+
+  <!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Converted Alaryngeal Speech using Voice Conversion</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        #header {
+            /* background-color: #d8e2dc; */
+            background-color:#6c584c;
+            color: white;
+            text-align: center;
+            padding: 100px;
+        }
+        .audioContainer {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            margin-top:5px;
+        }
+        .audioPlayer {
+            width: calc(33.33% - 20px);
+        }
+        .abstract {
+            margin: 20px;
+            margin-bottom: 40px;
+        }
+        #ctm { 
+            margin:20px;
+        }
+        #ADM{
+            margin:20px;
+    
+        }
+        #specmix{
+            margin:20px;
+        }
+        #basedline {
+            margin:20px;
+        }
+        #training{
+            margin:20px;
+        }
+        #masking{
+            margin-left:50px;
+        }
+        .card-header{
+            background-color: #6c584c;
+        }
+        .footer{
+            text-align:center;
+            
+        }
+
+        .photoContainer {
+        width: 100%;
+        }
+
+        .photo {
+        position: relative;
+        width: 100%;
+        }
+
+        .photo img {
+        width: 100%;
+        height: auto;
+        display: block;
+        }
+
+        .caption {
+        text-align: center;
+        margin-top: 10px;
+        }
+        /* .photoContainer {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            flex-wrap: wrap;
+        }
+        .photo {
+            width: calc(33.33% - 20px);
+            margin-bottom: 20px;
+        }
+        .photo img {
+            max-width: 100%;
+            height: auto;
+        }
+        .caption {
+        font-size: 14px;
+        margin-top: 5px;
+        margin-left:80px;
+
+    } */
+        .caption_spec{
+        font-size: 30px;
+        margin-top: 5px;
+        margin-left:70px;
+
+        }
+        .vertical-line {
+            border-left: 1px solid #ccc;
+            height: 100%; /* Adjust this value to match the height of your images */
+            margin: 0 15px;
+        }
+    </style> -->
+</head>
+
+<body>
+  <div id="header">
+    <h1>
+      A Novel Alaryngeal Speech Enhancement System with Attention-Driven kNN Matching and Perceiver-Based Feature
+      Expansion
+    </h1>
+  </div>
+  <!-- <div class = "abstract">
+        <h1> Abstract</h1>
+        <p>The primary goal of voice conversion is to transform the vocal characteristics of speech while preserving its linguistic content. In this paper, we introduce a data augmentation technique for alaryngeal speech using voice conversion within the MaskCycleGAN-VC framework. Our method leverages two innovative masking techniques: Articulatory Dimension Masking (ADM) and the combination of ADM with Consecutive Time Masking (CTM), referred to as Specmix. 
+            The original method employed for masking in MaskCycleGAN-VC seems to be CTM, and our novel masking techniques enhance the quality and performance of voice conversion for alaryngeal speech. We can also expand the variability of voice characteristics within the converted alaryngeal speech dataset.One notable enhancement in our approach is the incorporation of a timbre similarity score into the generator loss, known as the Timbre Enhanced Loss. This score dynamically guides the conversion process to prioritize the preservation of timbral characteristics during voice transformation</p>
+    </div> -->
+  <div class="container mt-5">
+    <div class="card">
+      <div class="card-body">
+        <h1 class="card-title">Abstract</h1>
+        <p class="card-text">Alaryngeal speech enhancement seeks to restore intelligibility and naturalness for
+          individuals who have undergone laryngectomy. Existing approaches based on direct spectral mapping or
+          frame-level voice conversion fail to exploit the linguistic structure underlying speech and are constrained by
+          scarce pathological data. We propose a novel multi-stage framework integrating (i)~discrete representation
+          learning and (ii)~attention-driven feature alignment. In the first stage, WavLM embeddings are quantized into
+          discrete tokens via $k$-means clustering and refined by a bidirectional Speech Language Model that maps
+          pathological token patterns toward normal speech, followed by Conformer-based reconstruction of continuous
+          features. In the second stage, an Attention-Driven Feature Matcher (ADFM) further enhances the reconstructed
+          features through three tightly coupled modules: a residual Feature Enhancer with learnable scaling, a
+          Multi-Head Attention Matcher that performs soft alignment over $k$-nearest normal-speech neighbors, and a
+          Quality Predictor that estimates match confidence to adaptively weight each feature. A HiFi-GAN vocoder
+          synthesizes the final waveform. To overcome data scarcity, we further introduce a Multi-Mask GAN augmentation
+          strategy extending MaskCycleGAN-VC with a timbre similarity loss for speaker identity preservation.
+          Evaluations on Thai and English corpora show that our system achieves the best speaker similarity in both
+          languages (0.858 Thai, 0.850 English) while simultaneously achieving competitive or state-of-the-art FAD
+          (5.252 Thai, 5.385 English) and MCD (5.644 Thai, 5.322 English), with up to 27.3\% FAD reduction over kNN-VC.
+          Subjective tests confirm significant listener preference for the enhanced speech (77\% English, 67\% Thai; $p
+          <0.001$). </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div id = "basedline">
+        <h2>Basedline Models</h2>
+        <ul>
+            <li><a href="http://www.kecl.ntt.co.jp/people/kaneko.takuhiro/projects/cyclegan-vc/index.html">CycleGAN-VC2</a> - Voice Conversion using CycleGAN</li>
+            <li><a href="http://www.kecl.ntt.co.jp/people/kaneko.takuhiro/projects/cyclegan-vc2/index.html">CycleGAN-VC3</a> - Improved CycleGAN-based Voice Conversion</li>
+            <li><a href="http://www.kecl.ntt.co.jp/people/kaneko.takuhiro/projects/maskcyclegan-vc/index.html#F2M">MaskCycleGAN-VC</a> - Voice Conversion with Masked CycleGAN</li>
+        </ul>
+        
+    </div> -->
+  <div class="container mt-5">
+    <div class="card">
+      <div class="card-body">
+        <h2 class="card-title">Baseline Models</h2>
+        <ul class="list-unstyled">
+          <li><a
+              href="http://www.kecl.ntt.co.jp/people/kaneko.takuhiro/projects/cyclegan-vc/index.html">MaskCycleGAN-VC</a>
+            - Voice Conversion using CycleGAN</li>
+          <li><a href="http://www.kecl.ntt.co.jp/people/kaneko.takuhiro/projects/cyclegan-vc2/index.html">kNN-VC</a> -
+            Improved CycleGAN-based Voice Conversion</li>
+          <li><a
+              href="http://www.kecl.ntt.co.jp/people/kaneko.takuhiro/projects/maskcyclegan-vc/index.html#F2M">Wesper</a>
+            - Voice Conversion with Masked CycleGAN</li>
+          <li><a href="http://www.kecl.ntt.co.jp/people/kaneko.takuhiro/projects/cyclegan-vc/index.html">SELM</a> -
+            Voice Conversion using CycleGAN</li>
+          <li><a href="http://www.kecl.ntt.co.jp/people/kaneko.takuhiro/projects/cyclegan-vc2/index.html">Phoneme
+              Hallucinator</a> - Improved CycleGAN-based Voice Conversion</li>
+          <li><a
+              href="http://www.kecl.ntt.co.jp/people/kaneko.takuhiro/projects/maskcyclegan-vc/index.html#F2M">MUSE</a> -
+            Voice Conversion with Masked CycleGAN</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="container mt-5">
+    <div class="card">
+      <div class="card-body">
+        <h2 class="card-title">Datasets</h2>
+        <p class="card-text">This study employs recorded Thai alaryngeal and normal speech datasets from the National
+          Science and Technology Development Agency of Thailand, alongside Mozilla Com- mon Voice and an English dataset
+          to ensure cross-linguistic robustness. Because of the scarcity of English alaryngeal speech data, we generate
+          synthetic English alaryngeal speech datasets using our proposed MaskCycleGAN-VC model.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container mt-5">
+    <div class="card">
+      <div class="card-body">
+        <div class="photoContainer">
+          <div class="photo">
+            <img src="overall_pipeline.drawio.png" alt="Photo 1" class="img-fluid">
+            <div class="caption caption_spec">Spectrogram Comparison</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+  <div class="container mt-5">
+
+    <div class="card">
+      <div class="card-header">
+        <h2>Thai Alaryngeal Speech Enhancement Results</h2>
+      </div>
+      <div class="card-body">
+        <div id="ctm">
+          <h2>Sentence 1</h2>
+        </div>
+        <div class="audioContainer">
+          <div class="audioPlayer">
+            <p>Alaryngeal</p>
+            <audio controls>
+              <source src="wavs/0001_0001.wav" type="audio/wav">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+
+          <div class="audioPlayer">
+            <p>Normal</p>
+            <audio controls>
+              <source src="wavs/normal_1.wav" type="audio/wav">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+
+
+          <div class="audioPlayer">
+            <p>Enhanced Alaryngeal with WESPER</p>
+            <audio controls>
+              <source src="wavs/0001_0001_wesper (1).wav" type="audio/wav">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+
+          <div class="audioPlayer">
+            <p>Enhanced Alaryngeal with our proposed model</p>
+            <audio controls>
+              <source src="wavs/0001_0001_final.WAV" type="audio/wav">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="card">
+
+      <div class="card-body">
+        <div id="ctm">
+          <h2>Sentence 2</h2>
+        </div>
+        <div class="audioContainer">
+          <div class="audioPlayer">
+            <p>Alaryngeal</p>
+            <audio controls>
+              <source src="wavs/0001_0003.wav" type="audio/wav">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+
+          <div class="audioPlayer">
+            <p>Normal</p>
+            <audio controls>
+              <source src="wavs/normal_3.wav" type="audio/wav">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+
+          <div class="audioPlayer">
+            <p>Enhanced Alaryngeal with WESPER</p>
+            <audio controls>
+              <source src="wavs/0001_0003_Wesper.wav" type="audio/wav">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+
+          <div class="audioPlayer">
+            <p>Enhanced Alaryngeal with our proposed model</p>
+            <audio controls>
+              <source src="wavs/final_output_0001_0003_trimmed.WAV" type="audio/wav">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <div class="card">
+
+      <div class="card-body">
+        <div id="ctm">
+          <h2>Sentence 3</h2>
+        </div>
+        <div class="audioContainer">
+          <div class="audioPlayer">
+            <p>Alaryngeal</p>
+            <audio controls>
+              <source src="wavs/0001_0004.wav" type="audio/wav">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+
+          <div class="audioPlayer">
+            <p>Normal</p>
+            <audio controls>
+              <source src="wavs/normal_4.wav" type="audio/wav">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+
+          <div class="audioPlayer">
+            <p>Enhanced Alaryngeal with WESPER</p>
+            <audio controls>
+              <source src="wavs/0001_0004_Wesper.wav" type="audio/wav">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+
+          <div class="audioPlayer">
+            <p>Enhanced Alaryngeal with our proposed model</p>
+            <audio controls>
+              <source src="wavs/final_output_0001_0004_trimmed.WAV" type="audio/wav">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!-- <div class="card">
+            
+            <div class="card-body">
+                <div id="ctm">
+                    <h2>Speaker0003 (Severe Level 1)</h2>
+                </div>
+                <div class="audioContainer">
+                    <div class="audioPlayer">
+                        <p>Alaryngeal</p>
+                        <audio controls>
+                            <source src="/Users/krislwin/Documents/alar_enhancement_journal_webpage/wavs/0001_0001.wav" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+
+                    <div class="audioPlayer">
+                        <p>Normal</p>
+                        <audio controls>
+                            <source src="/Users/krislwin/Documents/alar_enhancement_journal_webpage/wavs/normal_1.wav" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+
+                    
+                    <div class="audioPlayer">
+                        <p>Enhanced Alaryngeal with WESPER</p>
+                        <audio controls>
+                            <source src="/Users/krislwin/Documents/alar_enhancement_journal_webpage/wavs/0001_0001_wesper (1).wav" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+
+                    <div class="audioPlayer">
+                        <p>Enhanced Alaryngeal with our proposed model</p>
+                        <audio controls>
+                            <source src="/Users/krislwin/Documents/alar_enhancement_journal_webpage/wavs/0001_0001_final.WAV" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
+  </div>
+
+  <div class="container mt-5">
+    <div class="card">
+      <div class="card-header">
+        <h2>English Alaryngeal Speech Enhancement Results</h2>
+      </div>
+      <div class="card-body">
+        <div id="ctm">
+          <h2>Sentence 1</h2>
+        </div>
+        <div class="audioContainer">
+          <div class="audioPlayer">
+            <p>Alaryngeal</p>
+            <audio controls>
+              <source src="wavs/alaryngeal_eng_0.wav" type="audio/wav">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+
+          <div class="audioPlayer">
+            <p>Normal</p>
+            <audio controls>
+              <source src="wavs/English_normal.wav" type="audio/wav">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+
+          <div class="audioPlayer">
+            <p>Enhanced Alaryngeal with WESPER</p>
+            <audio controls>
+              <source src="wavs/alar_eng_0_wesper.WAV" type="audio/wav">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+
+          <div class="audioPlayer">
+            <p>Enhanced Alaryngeal with our proposed model</p>
+            <audio controls>
+              <source src="wavs/final_output_jimmy_eng_0_f_trimmed.WAV" type="audio/wav">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+
+      <div class="card-body">
+        <div id="ctm">
+          <h2>Sentence 2</h2>
+        </div>
+        <div class="audioContainer">
+          <div class="audioPlayer">
+            <p>Alaryngeal</p>
+            <audio controls>
+              <source src="wavs/segment_016_002.wav" type="audio/wav">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+
+          <div class="audioPlayer">
+            <p>Normal</p>
+            <audio controls>
+              <source src="wavs/judith_016_002.wav" type="audio/wav">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+
+
+          <div class="audioPlayer">
+            <p>Enhanced Alaryngeal with WESPER</p>
+            <audio controls>
+              <source src="wavs/016_002_wesper.wav" type="audio/wav">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+
+          <div class="audioPlayer">
+            <p>Enhanced Alaryngeal with our proposed model</p>
+            <audio controls>
+              <source src="wavs/final_output_016_002-2.wav" type="audio/wav">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+
+      <div class="card-body">
+        <div id="ctm">
+          <h2>Sentence 3</h2>
+        </div>
+        <div class="audioContainer">
+          <div class="audioPlayer">
+            <p>Alaryngeal</p>
+            <audio controls>
+              <source src="wavs/segment_018_002.wav" type="audio/wav">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+
+          <div class="audioPlayer">
+            <p>Normal</p>
+            <audio controls>
+              <source src="wavs/doug_018_002.mp3" type="audio/mp3">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+
+          <div class="audioPlayer">
+            <p>Enhanced Alaryngeal with WESPER</p>
+            <audio controls>
+              <source src="wavs/018_002_wesper.wav" type="audio/wav">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+
+          <div class="audioPlayer">
+            <p>Enhanced Alaryngeal with our proposed model</p>
+            <audio controls>
+              <source src="wavs/018_002_trimmed.WAV" type="audio/wav">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+
+
+
+
+  <div class="container mt-5">
+    <div class="card">
+      <div class="card-header">
+        <h2>References</h2>
+      </div>
+      <div class="card-body">
+        <ul class="list-group">
+          <li class="list-group-item">T. Kaneko, H. Kameoka, K. Tanaka and N. Hojo, "Maskcyclegan-VC: Learning
+            Non-Parallel Voice Conversion with Filling in Frames," ICASSP 2021 - 2021 IEEE International Conference on
+            Acoustics, Speech and Signal Processing (ICASSP), Toronto, ON, Canada, 2021, pp. 5919-5923, doi:
+            10.1109/ICASSP39728.2021.9414851.</li>
+          <li class="list-group-item">Park, D.S., Chan, W., Zhang, Y., Chiu, C.C., Zoph, B., Cubuk, E.D. and Le, Q.V.,
+            2019. Specaugment: A simple data augmentation method for automatic speech recognition. arXiv preprint
+            arXiv:1904.08779.</li>
+          <li class="list-group-item">Keigo Nakamura, Tomoki Toda, Hiroshi Saruwatari, and Kiyohiro Shikano,
+            “Speaking-aid systems using GMM-based voice conversion for electrolaryngeal speech,” Speech Commun., vol.
+            54, no. 1, pp. 134–146, 2012.</li>
+          <!-- Add more references as needed -->
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="container mt-5">
+    <footer class="footer">
+      <p>Alaryngeal Speech Enhancement</p>
+      <p>&copy; 2023 KMUTT&NSTDA. All Rights Reserved.</p>
+    </footer>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
