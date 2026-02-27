@@ -277,24 +277,23 @@
     <div class="card">
       <div class="card-body">
         <h1 class="card-title">Abstract</h1>
-        <p class="card-text">Alaryngeal speech enhancement seeks to restore intelligibility and naturalness for
-          individuals who have undergone laryngectomy. Existing approaches based on direct spectral mapping or
-          frame-level voice conversion fail to exploit the linguistic structure underlying speech and are constrained by
-          scarce pathological data. We propose a novel multi-stage framework integrating (i)~discrete representation
-          learning and (ii)~attention-driven feature alignment. In the first stage, WavLM embeddings are quantized into
-          discrete tokens via k-means clustering and refined by a bidirectional Speech Language Model that maps
-          pathological token patterns toward normal speech, followed by Conformer-based reconstruction of continuous
-          features. In the second stage, an Attention-Driven Feature Matcher (ADFM) further enhances the reconstructed
-          features through three tightly coupled modules: a residual Feature Enhancer with learnable scaling, a
-          Multi-Head Attention Matcher that performs soft alignment over k-nearest normal-speech neighbors, and a
-          Quality Predictor that estimates match confidence to adaptively weight each feature. A HiFi-GAN vocoder
-          synthesizes the final waveform. To overcome data scarcity, we further introduce a Multi-Mask GAN augmentation
-          strategy extending MaskCycleGAN-VC with a timbre similarity loss for speaker identity preservation.
-          Evaluations on Thai and English corpora show that our system achieves the best speaker similarity in both
-          languages (0.858 Thai, 0.850 English) while simultaneously achieving competitive or state-of-the-art FAD
-          (5.252 Thai, 5.385 English) and MCD (5.644 Thai, 5.322 English), with up to 27.3% FAD reduction over kNN-VC.
-          Subjective tests confirm significant listener preference for the enhanced speech (77% English, 67% Thai; p
-          <0.001). </p>
+        <p class="card-text">Alaryngealspeechenhancementseekstorestoreintelligibilityandnaturalnessforindividuals who
+          have undergone laryngectomy. Existing approaches based on direct spectral mapping or frame-level voice
+          conversion fail to exploit the linguistic structure underlying speech and are constrained by scarce
+          pathological data. We propose a novel multi-stage framework integrating (i) discrete representation learning
+          and (ii) attention-driven feature alignment. In the first stage, WavLM embeddings are quantized into discrete
+          tokens via k-means clustering and refined by a Speech Language Model that maps alaryngeal speech tokens toward
+          normal speech tokens, followed by Conformer-based reconstruction of continuous features. In the second stage,
+          an Attention-Driven Feature Matcher (ADFM) further enhances the reconstructed features through three tightly
+          coupled modules: a residual Feature Enhancer with learnable scaling, a Multi-Head Attention Matcher that
+          performs soft alignment over k-nearest normal-speech neighbors, and a Quality Predictor that estimates match
+          confidence to adaptively weight each feature. A HiFi-GAN vocoder synthesizes the final waveform. To overcome
+          data scarcity, we further introduce a Multi-Mask GAN augmentation strategy extending MaskCycleGAN-VC with a
+          timbre similarity loss for speaker identity preservation. Evaluations on Thai and English corpora show that
+          our system achieves the best speaker similarity in both languages (0.858 Thai, 0.850 English) while
+          simultaneously achieving competitive or state-of-the-art FAD (5.252 Thai, 5.385 English) and MCD (5.644 Thai,
+          5.322 English), with up to 27.3% FAD reduction over kNN-VC. Subjective tests confirm significant listener
+          preference for the enhanced speech (77% English, 67% Thai).</p>
       </div>
     </div>
   </div>
