@@ -1,2 +1,2 @@
 # ADASE
-Attention-Driven Alaryngeal Speech Enhancement via Discrete Representation Learning and Timbre-Preserving Augmentation
+Attention-Driven Alaryngeal Speech Enhancement via Discrete Representation Learning and Timbre-Preserving GAN Augmentation
