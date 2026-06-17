@@ -170,24 +170,18 @@
     }
 
     .photo {
-      position: relative;
       width: 100%;
       border-radius: 12px;
       overflow: hidden;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-      /* Prevent excess whitespace when image aspect ratio changes */
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--background);
+      line-height: 0; /* collapse inline whitespace */
     }
 
     .photo img {
       width: 100%;
-      max-height: 600px;
       height: auto;
-      object-fit: contain;
       display: block;
+      border-radius: 12px;
       transition: transform 0.3s ease;
     }
 
@@ -202,6 +196,7 @@
       font-size: 1.1rem;
       color: var(--primary);
       font-weight: 500;
+      line-height: 1.5;
     }
 
     /* Tighten card body padding for the pipeline figure */
